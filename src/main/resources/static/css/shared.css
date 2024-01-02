@@ -1,0 +1,48 @@
+nav{
+    box-shadow: 0px 0px 8px black;
+}
+
+.navbar{
+    padding-left: 2%!important;
+     max-height: 110px;
+     padding-right: 2.5%!important;
+}
+
+
+.navbar-brand{
+    font-size: 30px!important;
+    margin-top: 0.5%;
+    font-weight: bold;
+}
+
+.navbar-collapse{
+    display: flex;
+    justify-content: flex-end;
+    font-size: 20px!important;
+    padding-right: 2%;
+}
+
+.nav-item{
+	margin-right: 10%;
+}
+
+body{
+    font-family: 'Teko', sans-serif!important;
+}
+
+.danger {
+    background-color: rgb(169 23 11 / 54%);
+    border-radius: 1em;
+    padding: 2%;
+    margin-top: 6%!important;
+    color: white;
+    font-weight: bolder;
+
+}
+
+.main-container{
+    padding-top: 3%;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 5%;
+}
