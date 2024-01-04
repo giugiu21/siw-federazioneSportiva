@@ -3,3 +3,29 @@ body{
 	font-family: 'Teko', sans-serif!important;
 }
 
+.container-bg{
+	background-image: url("../images/volleyball.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	border-radius: 0.5rem;
+	height: 500px;
+	padding-top: 8%;
+	padding-right: 3%;
+}
+
+.container-neon-component{
+	display: flex;
+	flex-direction: row;
+}
+
+
+.column-bg{
+	background-color: rgba(255, 255, 255, 0.725);
+	margin-left: 60%;
+	color: black;
+	padding: 2%;
+	border-radius: 0.5rem;
+	 
+}
+
