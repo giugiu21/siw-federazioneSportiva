@@ -1,0 +1,28 @@
+
+.main-container{
+    /*background-color: rgb(221, 239, 114);*/
+    background-image: url("../images/login-bg.JPG") ;
+    background-position: left;
+    background-repeat: no-repeat;
+    margin: 3% 10%;
+    border-radius: 1rem;
+	
+}
+
+form{
+	padding-top: 10%!important;
+}
+
+
+#title{
+	text-align: center;
+	font-weight: bolder;
+	color: rgb(221, 239, 114)!important;
+}
+
+#link-register{
+	color: #b0aeae;
+	text-align: center;
+	font-weight: lighter;
+	margin-top: 5%;
+}

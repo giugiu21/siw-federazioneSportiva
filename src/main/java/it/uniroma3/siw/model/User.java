@@ -16,6 +16,8 @@ public class User {
 	
 	private String lastname;
 	
+	private String email;
+	
 	
 	private Boolean isPresident;
 
@@ -33,6 +35,14 @@ public class User {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getLastname() {

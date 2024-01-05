@@ -21,9 +21,10 @@ body{
 
 
 .column-bg{
-	background-color: rgba(255, 255, 255, 0.725);
+	/*background-color: rgba(255, 255, 255, 0.725);*/
+	background-color: #0000008c;
 	margin-left: 60%;
-	color: black;
+	color: #c4c1c1;
 	padding: 2%;
 	border-radius: 0.5rem;
 	 

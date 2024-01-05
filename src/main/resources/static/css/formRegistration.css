@@ -1,0 +1,41 @@
+
+
+.main-container{
+    /*background-color: rgb(221, 239, 114);*/
+    background-image: url("../images/login-bg.JPG") ;
+    background-position: left;
+    background-repeat: no-repeat;
+    margin: 3% 10%;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: row;
+	
+}
+
+form{
+	padding-top: 7%!important;
+}
+
+.form-container{
+	margin-left: 0%!important;
+}
+
+
+#title {
+    text-align: center;
+    width: 55%;
+    margin-left: 20%;
+    margin-top: 22%;
+    border-radius: 1rem;
+    padding: 1%;
+    background-color: #0000008c;
+    font-weight: bolder;
+    color: rgb(221, 239, 114)!important;
+}
+
+#link-login{
+	color: #b0aeae;
+	text-align: center;
+	font-weight: lighter;
+	margin-top: 5%;
+}
