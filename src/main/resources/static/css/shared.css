@@ -65,6 +65,34 @@ body{
     margin-left: 5%;
 }
 
+
+
+.icon{
+	border-radius: 2rem;
+	width: 11.5%;
+	background-color: rgb(221, 239, 114)!important;
+	margin: 1%;
+	padding: 2%;
+	padding-bottom: 3%;
+	padding-left: 3.5%;
+	
+}
+
+.icon:hover{
+	background-color: black!important;
+	/*border: lightgrey;*/
+}
+
+i:hover{
+	color: white;
+}
+
+i{
+	color: black;
+	text-decoration: none;
+	
+}
+
 /*GESTIONE FORM*/
 
 .form-container{

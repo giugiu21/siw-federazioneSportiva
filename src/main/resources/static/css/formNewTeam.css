@@ -1,0 +1,16 @@
+.main-container{
+    /*background-color: rgb(221, 239, 114);*/
+    background-image: url("../images/login-bg.JPG") ;
+    background-position: left;
+    background-repeat: no-repeat;
+    margin: 3% 10%;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: row;
+	
+}
+
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Federazione Sport</title>
-    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="stylesheet" href="/css/formNewTeam.css" />
     <link rel="stylesheet" href="/css/shared.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
@@ -46,19 +46,39 @@
 <body>
 	<!-- SE L'UTENTE E' LOGGATO -->
 	<div class="main-container" th:if="${userDetails}">
-		
+		<div class="form-container">
+			 <form th:action="@{/admin/newTeam}" method="POST">
+				<h1 style="color: rgb(221, 239, 114)!important; text-align: center;">Aggiungi una nuova Squadra</h1>
+				<label style="font-weight: bolder;">Nome:</label>
+                <input type="text" th:field="${team.name}" class="input-text form-control">
+                <label style="font-weight: bolder;">Anno di Fondazione:</label>
+                <input type="date" th:field="${team.foundingYear}" class="input-text form-control">
+                <label style="font-weight: bolder;">Indirizzo Sede:</label>
+                <input type="text" th:field="${team.address}" class="input-text form-control">
+				<label style="font-weight: bolder;">Aggiungi presidente</label>
+				<div th:if="${presidents}">
+					<ul th:each="president : ${presidents}">
+						<li> 
+							<p th:text="${president.name} + ' ' + ${president.lastname}"></p>
+							<a th:href="@{'/admin/setPresidentToTeam/'+ ${president.id}+'/'+${team.id}}"><i class="bi bi-plus-circle-fill"></i></a>
+						</li>
+					</ul>
+				</div>
+				<div th:unless="${presidents == null}">
+					<h6 style="color: white;">Non ci sono presidenti nel sistema</h6>
+				</div>
+               <div class="btn-container">
+				   <button type="submit" class="btn">Aggiungi</button>
+			   </div>
+			   <span class="danger" th:if="${newTeamError}" th:text="${newTeamError}"></span>
+            </form>
+		</div>
 	</div>
 	
 	
 	<!-- SE L'UTENTE NON E' LOGGATO -->
 	<div class="main-container" th:unless="${userDetails}">
-		<div class="container-bg">
-			<div class="column-bg">
-				<h1>Scopri le squadre associate alla nostra<br> Federazione Sportiva<a class="btn" href="/register">Iscriviti</a></h1>
-				
-			</div>
-		</div>
-		
+		<h1 style="color: white;">Effettua il login per vedere i contenuti del sito</h1>
 	</div>
 
 </body>
