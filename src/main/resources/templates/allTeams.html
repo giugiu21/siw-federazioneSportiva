@@ -55,7 +55,7 @@
 						<h5 class="label">Indirizzo: <span class="text" th:text="${team.address}">via corrado segre</span></h5>
 						<h5 class="label">Presidente:</h5>
 						<div th:if="${team.president}">
-							<h5 class="text" th:text="${team.president.name} + '' + ${team.president.lastname}"></h6>
+							<h5 class="text" th:text="${team.president.name} + ' ' + ${team.president.lastname}"></h6>
 						</div>
 						<div th:unless="${team.president}">
 							<h5 class="text">Nessun Presidente inserito</h5>
@@ -63,12 +63,12 @@
 							<h5 class="label" >Giocatori:</h5>
 							<ul th:if="${team.players}">
 								<div th:each="player : ${team.players}">
-									<li class="text" th:text="${player.name} + '' + ${player.lastname}">Nome Cognome</li>
+									<li class="text" th:text="${player.name} + ' ' + ${player.lastname}">Nome Cognome</li>
 								</div>
 							</ul>
-							<ul th:unless="${team.players}">
-								<li class="text" >Nessun giocatore inserito</li>
-							</ul>
+							<div th:if="${team.players.isEmpty()}">
+								<h5 class="text" >Nessun giocatore inserito</h5>
+							</div>
 				         <div class="card-button" th:if="${admin}">
 							
 							<a th:href="@{'/admin/formEditTeam/' + ${team.id}}" class="icon"><i class="bi bi-pencil-square"></i></a>

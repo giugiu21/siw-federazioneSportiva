@@ -46,8 +46,8 @@
 <body>
 	<!-- SE L'UTENTE E' LOGGATO -->
 	<div class="main-container" th:if="${userDetails}">
-		<div class="form-container">
-			 <form th:action="@{/admin/newTeam}" method="POST">
+		<div class="form-container"> 
+			 <form th:action="@{/admin/formEditTeam/} + ${team.id}" th:object="${team}" th:method="POST">
 				<h1 style="color: rgb(221, 239, 114)!important; text-align: center;">Modifica la Squadra</h1>
 				<label style="font-weight: bolder;">Nome:</label>
                 <input type="text" th:field="${team.name}" class="input-text form-control">
@@ -56,26 +56,31 @@
                 <label style="font-weight: bolder;">Indirizzo Sede:</label>
                 <input type="text" th:field="${team.address}" class="input-text form-control">
                 <div th:if="${team.president}">
-					<h6>Presidente: <span th:text="${team.president.name} + '' + ${team.president.lastname}"></span></h6>
+					<label style="font-weight: bolder;">Presidente:</label>
+					<span style="color: #b0aeae!important; margin-left: 2%;" th:text="${team.president.name} + ' ' + ${team.president.lastname}"></span>
 				</div>
-                <div th:unless="${team.president}">
-					<label style="font-weight: bolder;">Aggiungi o cambia presidente</label>
+					<label style="font-weight: bolder; margin-top: 1.5%;">Aggiungi o modifica presidente</label>
 					<div th:if="${presidents}">
-						<ul th:each="president : ${presidents}">
+							<select id="president" th:field="${team.president}" class="input-select">
+								<option value="">--seleziona--</option>
+    							<option th:each="president : ${presidents}" th:value="${president.id}" th:text="${president.name} + ' ' + ${president.lastname}"></option>
+							</select>
+						
+						<!--<ul th:each="president : ${presidents}">
 							<li> 
 								<p th:text="${president.name} + ' ' + ${president.lastname}"></p>
 								<a th:href="@{'/admin/setPresidentToTeam/'+ ${president.id}+'/'+${team.id}}"><i class="bi bi-plus-circle-fill"></i></a>
 							</li>
-						</ul>
+						</ul>-->
 					</div>
-				</div>
 				<div th:unless="${presidents}">
 					<h6 style="color: white;">Non ci sono presidenti nel sistema</h6>
 				</div>
+				
                <div class="btn-container">
 				   <button type="submit" class="btn">Modifica</button>
 			   </div>
-			   <span class="danger" th:if="${newTeamError}" th:text="${newTeamError}"></span>
+			   <span class="danger" th:if="${PresidentError}" th:text="${PresidentError}"></span>
             </form>
 		</div>
 	</div>

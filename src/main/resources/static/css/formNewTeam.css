@@ -14,3 +14,27 @@
     filter: invert(1);
 }
 
+
+
+select {
+	color: white!important;
+ }
+ 
+ .add{
+    margin-left: 2%;
+    margin-top: -1%;
+ }
+ 
+ li{
+	 display: flex;
+	 flex-direction: row;
+ }
+ 
+ i{
+	color: rgb(221, 239, 114)!important;
+}
+
+i:hover{
+	color: black!important;
+	
+}

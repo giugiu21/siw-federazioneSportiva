@@ -84,7 +84,7 @@ body{
 }
 
 i:hover{
-	color: white;
+	color: rgb(221, 239, 114);
 }
 
 i{
@@ -136,10 +136,9 @@ label{
   	background: rgb(53, 55, 55)!important;
 	border-color: rgb(63, 63, 63)!important;
 	margin-bottom: 2%!important;
-	margin-left: 2%;
 	padding: 0.5%;
 	text-align: center;
-	width: 6%;
+	width: 30%;
 }
 
 
