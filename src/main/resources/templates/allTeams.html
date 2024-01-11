@@ -32,7 +32,7 @@
                 <a class="nav-link" href="/admin/formNewTeam">Aggiungi Squadra</a>
             </li>
             <li class="nav-item" th:if="${president}"> <!-- se l'utente è presidente-->
-                <a class="nav-link" href="#">La mia Squadra</a>
+                <a class="nav-link" href="/president/myTeam">La mia Squadra</a>
             </li>
             <li class="nav-item" th:if="${userDetails}"> <!-- se l'utente è loggato-->
                 <a class="nav-link" href="/logout">Logout</a>
@@ -61,13 +61,14 @@
 							<h5 class="text">Nessun Presidente inserito</h5>
 						</div>
 							<h5 class="label" >Giocatori:</h5>
-							<ul th:if="${team.players}">
-								<div th:each="player : ${team.players}">
-									<li class="text" th:text="${player.name} + ' ' + ${player.lastname}">Nome Cognome</li>
+							<div class="player-container">
+								<ul th:if="${team.players}" class="grid">
+									<li th:each="player : ${team.players}" class="text" th:text="${player.name} + ' ' + ${player.lastname}">Nome Cognome</li>
+								</ul>
+							
+								<div th:if="${team.players.isEmpty()}">
+									<h5 class="text" style="text-align: center;">Nessun giocatore inserito</h5>
 								</div>
-							</ul>
-							<div th:if="${team.players.isEmpty()}">
-								<h5 class="text" >Nessun giocatore inserito</h5>
 							</div>
 				         <div class="card-button" th:if="${admin}">
 							

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.Team;
+import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.TeamRepository;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.TeamService;
@@ -65,7 +66,7 @@ public class AdminController {
 
 	
 	
-	@GetMapping("admin/formNewTeam")
+	@GetMapping("/admin/formNewTeam")
 	public String formNewTeam(Model model) {
 		UserDetails userDetails = this.userService.getUserDetails();
 		Credentials credentials = this.credentialsService.getCredentials(userDetails.getUsername());
@@ -82,7 +83,7 @@ public class AdminController {
 		return "admin/formNewTeam.html";
 	}
 	
-	@PostMapping("admin/newTeam")
+	@PostMapping("/admin/newTeam")
 	public String newTeam(@ModelAttribute("team") Team team, Model model) {
 		UserDetails userDetails = this.userService.getUserDetails();
 		Credentials credentials = this.credentialsService.getCredentials(userDetails.getUsername());

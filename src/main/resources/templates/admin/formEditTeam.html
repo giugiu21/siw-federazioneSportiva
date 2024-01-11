@@ -32,7 +32,7 @@
                 <a class="nav-link" href="/admin/formNewTeam">Aggiungi Squadra</a>
             </li>
             <li class="nav-item" th:if="${president}"> <!-- se l'utente è presidente-->
-                <a class="nav-link" href="#">La mia Squadra</a>
+                <a class="nav-link" href="/president/myTeam">La mia Squadra</a>
             </li>
             <li class="nav-item" th:if="${userDetails}"> <!-- se l'utente è loggato-->
                 <a class="nav-link" href="/logout">Logout</a>

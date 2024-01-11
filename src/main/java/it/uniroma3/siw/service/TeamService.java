@@ -42,6 +42,29 @@ public class TeamService {
 		return inUse;
 	}
 	
+	public boolean isPresident(String name, String lastname) {
+    	Iterable <President> allPresidents = this.presidentRepository.findAll();
+    	
+    	for(President p : allPresidents) {
+    		if(p.getName().equals(name) && p.getLastname().equals(lastname)) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
+	
+	public Team getMyTeam(President president) {
+		Iterable <Team> allTeams = this.teamRepository.findAll();
+		
+		for(Team team : allTeams) {
+			if(team.getPresident()!=null && team.getPresident().equals(president)) {
+				return team;
+			}
+		}
+		
+		return null;
+	}
 	
 
 }

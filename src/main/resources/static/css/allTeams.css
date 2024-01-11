@@ -28,12 +28,24 @@ ul{
 	justify-content: space-between;
 }
 
-li{
-	list-style: none;
+
+
+
+.grid{
+	
+	display: grid;
+
+	grid-template-columns: repeat(3, 1fr);
+
+	grid-auto-rows: auto;
+
+	grid-gap: 0.5%;
+	
 }
 
-
-
+.player-container{
+	height: 100px;
+}
 
 .card-container{
    

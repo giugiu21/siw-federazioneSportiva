@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.TeamRepository;
+import it.uniroma3.siw.repository.UserRepository;
 import it.uniroma3.siw.service.CredentialsService;
+import it.uniroma3.siw.service.PlayerService;
+import it.uniroma3.siw.service.TeamService;
 import it.uniroma3.siw.service.UserService;
 import jakarta.validation.Valid;
 
@@ -27,6 +30,15 @@ public class ViewController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private TeamService teamService;
+	
+	@Autowired
+	private PlayerService playerService;
 	
 	@Autowired
 	private TeamRepository teamRepository;
@@ -52,6 +64,15 @@ public class ViewController {
 		}
 		
 		/*Controllo se è presidente*/
+		if(credentials!=null) {
+			User user =  this.userRepository.findById(credentials.getUser().getId()).orElse(null);
+			
+			if(user!=null && this.teamService.isPresident(user.getName(), user.getLastname())){
+				model.addAttribute("president", true);
+			}
+			
+		}
+		
 		
 		return "index.html";
 	}
@@ -68,6 +89,12 @@ public class ViewController {
 		
 		if(credentials != null && credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
 			model.addAttribute("admin", true);
+		}
+		/*Controllo se è presidente*/
+		User user =  this.userRepository.findById(credentials.getUser().getId()).orElse(null);
+		
+		if(user!=null && this.teamService.isPresident(user.getName(), user.getLastname())){
+			model.addAttribute("president", true);
 		}
 
 		model.addAttribute("userDetails", userDetails);
@@ -122,7 +149,13 @@ public class ViewController {
 		if(credentials != null && credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
 			model.addAttribute("admin", true);
 		}
+		/*Controllo se è presidente*/
+		User user =  this.userRepository.findById(credentials.getUser().getId()).orElse(null);
 		
+		if(user!=null && this.teamService.isPresident(user.getName(), user.getLastname())){
+			model.addAttribute("president", true);
+		}
+		this.playerService.freePlayersFromContract();
 		model.addAttribute("teams", this.teamRepository.findAll());
 		return "allTeams.html";
 	}

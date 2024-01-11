@@ -9,6 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import it.uniroma3.siw.model.Credentials;
+import it.uniroma3.siw.model.President;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -18,6 +20,7 @@ public class UserService {
 
 	@Autowired
     protected UserRepository userRepository;
+	
 
     @Transactional
     public User getUser(Long id) {
@@ -39,4 +42,6 @@ public class UserService {
         }
         return userDetails;
     }
+    
+   
 }
