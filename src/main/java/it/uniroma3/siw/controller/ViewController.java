@@ -113,21 +113,17 @@ public class ViewController {
 	
 	@GetMapping("/allTeams")
 	public String allTeams(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		UserDetails userDetails = null;
-		Credentials credentials = null;
-		if(!(authentication instanceof AnonymousAuthenticationToken)){
-			userDetails = (UserDetails)authentication.getPrincipal();
-			credentials = this.credentialsService.getCredentials(userDetails.getUsername());
-		}
+		UserDetails userDetails = this.userService.getUserDetails();
+		Credentials credentials = this.credentialsService.getCredentials(userDetails.getUsername());
 		
+		if(userDetails!=null) {
+			model.addAttribute("userDetails", userDetails);
+		}
 		if(credentials != null && credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
 			model.addAttribute("admin", true);
 		}
-
-		model.addAttribute("userDetails", userDetails);
-		model.addAttribute("teams", this.teamRepository.findAll());
 		
+		model.addAttribute("teams", this.teamRepository.findAll());
 		return "allTeams.html";
 	}
 	

@@ -3,9 +3,6 @@ package it.uniroma3.siw.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +19,7 @@ import it.uniroma3.siw.model.Team;
 import it.uniroma3.siw.repository.TeamRepository;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.TeamService;
+import it.uniroma3.siw.service.UserService;
 import it.uniroma3.siw.repository.PresidentRepository;
 
 @Controller
@@ -36,6 +34,10 @@ public class AdminController {
 	
 	@Autowired
 	private CredentialsService credentialsService;
+	
+	@Autowired
+	private UserService userService;
+
 
 
 	
@@ -46,19 +48,15 @@ public class AdminController {
 	
 	@RequestMapping(value = "/admin/delete/{id}", method = RequestMethod.GET)
 	public String deleteTeam(@PathVariable("id") Long id, Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		UserDetails userDetails = null;
-		Credentials credentials = null;
-		if(!(authentication instanceof AnonymousAuthenticationToken)){
-			userDetails = (UserDetails)authentication.getPrincipal();
-			credentials = this.credentialsService.getCredentials(userDetails.getUsername());
-		}
+		UserDetails userDetails = this.userService.getUserDetails();
+		Credentials credentials = this.credentialsService.getCredentials(userDetails.getUsername());
 		
+		if(userDetails!=null) {
+			model.addAttribute("userDetails", userDetails);
+		}
 		if(credentials != null && credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
 			model.addAttribute("admin", true);
 		}
-
-		model.addAttribute("userDetails", userDetails);
 		
 		this.teamRepository.deleteById(id);
 		model.addAttribute("teams", this.teamRepository.findAll());
@@ -69,19 +67,16 @@ public class AdminController {
 	
 	@GetMapping("admin/formNewTeam")
 	public String formNewTeam(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		UserDetails userDetails = null;
-		Credentials credentials = null;
-		if(!(authentication instanceof AnonymousAuthenticationToken)){
-			userDetails = (UserDetails)authentication.getPrincipal();
-			credentials = this.credentialsService.getCredentials(userDetails.getUsername());
-		}
+		UserDetails userDetails = this.userService.getUserDetails();
+		Credentials credentials = this.credentialsService.getCredentials(userDetails.getUsername());
 		
+		if(userDetails!=null) {
+			model.addAttribute("userDetails", userDetails);
+		}
 		if(credentials != null && credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
 			model.addAttribute("admin", true);
 		}
-
-		model.addAttribute("userDetails", userDetails);
+		
 		model.addAttribute("team", new Team());
 		model.addAttribute("presidents", presidentRepository.findAll());
 		return "admin/formNewTeam.html";
@@ -89,19 +84,16 @@ public class AdminController {
 	
 	@PostMapping("admin/newTeam")
 	public String newTeam(@ModelAttribute("team") Team team, Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		UserDetails userDetails = null;
-		Credentials credentials = null;
-		if(!(authentication instanceof AnonymousAuthenticationToken)){
-			userDetails = (UserDetails)authentication.getPrincipal();
-			credentials = this.credentialsService.getCredentials(userDetails.getUsername());
-		}
+		UserDetails userDetails = this.userService.getUserDetails();
+		Credentials credentials = this.credentialsService.getCredentials(userDetails.getUsername());
 		
+		if(userDetails!=null) {
+			model.addAttribute("userDetails", userDetails);
+		}
 		if(credentials != null && credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
 			model.addAttribute("admin", true);
 		}
-
-		model.addAttribute("userDetails", userDetails);
+		
 		if (!teamRepository.existsByName(team.getName())) {
 			this.teamRepository.save(team);
 			model.addAttribute("teams", this.teamRepository.findAll());
@@ -117,47 +109,37 @@ public class AdminController {
 	
 	@GetMapping("/admin/formEditTeam/{id}")  
     public String formEditTeam(@PathVariable("id") Long id, Model model){
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		UserDetails userDetails = null;
-		Credentials credentials = null;
-		if(!(authentication instanceof AnonymousAuthenticationToken)){
-			userDetails = (UserDetails)authentication.getPrincipal();
-			credentials = this.credentialsService.getCredentials(userDetails.getUsername());
-		}
+
+		UserDetails userDetails = this.userService.getUserDetails();
+		Credentials credentials = this.credentialsService.getCredentials(userDetails.getUsername());
 		
+		if(userDetails!=null) {
+			model.addAttribute("userDetails", userDetails);
+		}
 		if(credentials != null && credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
 			model.addAttribute("admin", true);
 		}
-
-		model.addAttribute("userDetails", userDetails);
 		
         model.addAttribute("team", this.teamRepository.findById(id).get());
-       
-
         model.addAttribute("presidents", this.presidentRepository.findAll());
         return "admin/formEditTeam.html";
     }
 	
 	
 	
-	
-	
 	@PostMapping("/admin/formEditTeam/{id}")
 	public String editTeam(@ModelAttribute("team") Team team, @PathVariable("id") Long teamId,  Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		UserDetails userDetails = null;
-		Credentials credentials = null;
-		if(!(authentication instanceof AnonymousAuthenticationToken)){
-			userDetails = (UserDetails)authentication.getPrincipal();
-			credentials = this.credentialsService.getCredentials(userDetails.getUsername());
+		
+		UserDetails userDetails = this.userService.getUserDetails();
+		Credentials credentials = this.credentialsService.getCredentials(userDetails.getUsername());
+		
+		if(userDetails!=null) {
+			model.addAttribute("userDetails", userDetails);
 		}
 		
 		if(credentials != null && credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
 			model.addAttribute("admin", true);
 		}
-
-		model.addAttribute("userDetails", userDetails);
-		
 		
 		boolean pInUse = this.teamService.isUsed(team.getPresident());
 		

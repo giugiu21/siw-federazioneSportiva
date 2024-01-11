@@ -1,3 +1,7 @@
+.navbar-expand-lg .navbar-nav {
+    padding-bottom: 3%!important;
+}
+
 .main-container{
 	background-image: url("../images/bg-allTeams.jpeg");
 	background-position: center;
