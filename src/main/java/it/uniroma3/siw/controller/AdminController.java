@@ -19,6 +19,7 @@ import it.uniroma3.siw.model.Team;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.TeamRepository;
 import it.uniroma3.siw.service.CredentialsService;
+import it.uniroma3.siw.service.PresidentService;
 import it.uniroma3.siw.service.TeamService;
 import it.uniroma3.siw.service.UserService;
 import it.uniroma3.siw.repository.PresidentRepository;
@@ -39,9 +40,9 @@ public class AdminController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private PresidentService presidentService;
 
-
-	
 	@Autowired
 	private TeamService teamService;
 
@@ -79,7 +80,7 @@ public class AdminController {
 		}
 		
 		model.addAttribute("team", new Team());
-		model.addAttribute("presidents", presidentRepository.findAll());
+		model.addAttribute("presidents", this.presidentService.getFreePresidents());
 		return "admin/formNewTeam.html";
 	}
 	
@@ -148,7 +149,7 @@ public class AdminController {
 		if(pInUse) {
 			model.addAttribute("team", this.teamRepository.findById(teamId).get());
 			model.addAttribute("PresidentError", "Presidente già in uso, scegline un altro");
-			 model.addAttribute("presidents", this.presidentRepository.findAll());
+			model.addAttribute("presidents", this.presidentRepository.findAll());
 			return "admin/formEditTeam.html";
 		}
 		

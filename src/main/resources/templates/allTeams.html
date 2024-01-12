@@ -61,14 +61,17 @@
 							<h5 class="text">Nessun Presidente inserito</h5>
 						</div>
 							<h5 class="label" >Giocatori:</h5>
-							<div class="player-container">
-								<ul th:if="${team.players}" class="grid">
+							<div class="player-container" th:if="${team.players}">
+								<ul class="grid">
 									<li th:each="player : ${team.players}" class="text" th:text="${player.name} + ' ' + ${player.lastname}">Nome Cognome</li>
 								</ul>
 							
 								<div th:if="${team.players.isEmpty()}">
 									<h5 class="text" style="text-align: center;">Nessun giocatore inserito</h5>
 								</div>
+							</div>
+							<div class="player-container" th:unless="${team.players}">
+								<h5 class="text" style="text-align: center;">Nessun giocatore inserito</h5>
 							</div>
 				         <div class="card-button" th:if="${admin}">
 							

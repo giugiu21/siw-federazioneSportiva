@@ -57,13 +57,23 @@
                 <input type="text" th:field="${team.address}" class="input-text form-control">
 				<label style="font-weight: bolder; margin-bottom: 2%;">Aggiungi presidente:</label>
 				<div th:if="${presidents}">
+							<select id="president" th:field="${team.president}" class="input-select">
+								<option value="">--seleziona--</option>
+    							<option th:each="president : ${presidents}" th:value="${president.id}" th:text="${president.name} + ' ' + ${president.lastname}"></option>
+							</select>
+					</div>
+				<div th:unless="${presidents}">
+					<h6 style="color: white;">Non ci sono presidenti nel sistema</h6>
+				</div>
+				
+				<!--<div th:if="${presidents}">
 					<ul th:each="president : ${presidents}">
 						<li> 
 							<p style="color: #b0aeae!important;" th:text="${president.name} + ' ' + ${president.lastname}"></p>
 							<a th:href="@{'/admin/setPresidentToTeam/'+ ${president.id}+'/'+${team.id}}" class="add" ><i class="bi bi-plus-circle-fill"></i></a>
 						</li>
 					</ul>
-				</div>
+				</div>-->
 				<div th:if="${presidents == null}">
 					<h6 style="color: white;">Non ci sono presidenti nel sistema</h6>
 				</div>
