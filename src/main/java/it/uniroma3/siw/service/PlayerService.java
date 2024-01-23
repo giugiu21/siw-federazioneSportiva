@@ -23,14 +23,17 @@ public class PlayerService {
 	
 	
 	public void freePlayersFromContract() {
+		
 		Iterable<Team> allTeams = this.teamRepository.findAll();
 		
 		for(Team team : allTeams) {
 			for(Player usedPlayer : team.getPlayers()) {
-				if(usedPlayer.getEndDate().equals(java.time.LocalDate.now())) {
+				
+				if(usedPlayer.getEndDate().equals(java.time.LocalDate.now()) || usedPlayer.getEndDate().isBefore(java.time.LocalDate.now())) {
 					team.getPlayers().remove(usedPlayer);
 					usedPlayer.setStartDate(null);
 					usedPlayer.setEndDate(null);
+					this.teamRepository.save(team);
 					this.playerRepository.save(usedPlayer);
 				}
 			}
