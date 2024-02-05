@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import it.uniroma3.siw.model.Player;
 import it.uniroma3.siw.model.President;
 import it.uniroma3.siw.model.Team;
 import it.uniroma3.siw.repository.PresidentRepository;
@@ -22,17 +21,6 @@ public class PresidentService {
 	private TeamRepository teamRepository;
 	
 	
-	
-	public President getPresident(String name, String lastname) {
-		List<President> presidents = this.presidentRepository.findByNameAndLastname(name, lastname);
-		President president = null;
-		for(President p : presidents) {
-			if(p!=null) {
-				president = this.presidentRepository.findById(p.getId()).orElse(null);
-			}
-		}
-		return president;
-	}
 	
 	public Iterable<President> getFreePresidents(){
 		

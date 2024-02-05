@@ -23,6 +23,7 @@ public class Team {
 	private String address;
 	
 	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "president")
 	private President president;
 	
 	@OneToMany

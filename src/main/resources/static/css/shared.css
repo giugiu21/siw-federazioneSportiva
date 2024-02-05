@@ -148,6 +148,10 @@ label{
 	width: 30%;
 }
 
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
 
 /*MESSAGGI*/
 

@@ -52,17 +52,59 @@
 			<h3 class="label">Indirizzo sede: <span th:text="${myTeam.address}"></span></h3>
 			<div class="allPlayers-container">
 				<h3 class="label">Giocatori:</h3>
-				<div class="grid" th:if="${!myTeam.players.isEmpty()}">
-					<ul th:each="player : ${myTeam.players}">
-					<li style="color: #b0aeae!important;" th:text="${player.name} + ' ' + ${player.lastname}">
-					</li>
-				</ul>
+				<div th:if="${!myTeam.players.isEmpty()}">
+					<table>
+						  <tr>
+						    <th style=" color: rgb(221, 239, 114);">Nome</th>
+						    <th style=" color: rgb(221, 239, 114);">Cognome</th>
+						    <th style=" color: rgb(221, 239, 114);">Ruolo</th>
+						    <th style=" color: rgb(221, 239, 114);">Data di Nascita</th>
+						    <th style=" color: rgb(221, 239, 114);">Inizio Tesseramento</th>
+						    <th style=" color: rgb(221, 239, 114);">Fine Tesseramento</th>
+						    <th style=" color: rgb(221, 239, 114);">Azioni</th>
+						  </tr>
+						  <tr th:each="player : ${myTeam.players}">
+						    <td style="color: #b0aeae!important;" th:text="${player.name}">Alfreds Futterkiste</td>
+						    <td style="color: #b0aeae!important;"  th:text="${player.lastname}">Maria Anders</td>
+						    <td style="color: #b0aeae!important;" th:text="${player.role}">Maria Anders</td>
+						    <td style="color: #b0aeae!important;" th:text="${player.dateOfBirth}">Maria Anders</td>
+						    <td style="color: #b0aeae!important;" th:text="${player.startDate}">Germany</td>
+						    <td style="color: #b0aeae!important;" th:text="${player.endDate}">Germany</td>
+						    <td>
+								<a th:href="@{'/president/deletePlayer/'+ ${myTeam.id}+'/'+${player.id}}" style=" width: 30%;" class="remove"><i
+								class="bi bi-x-circle-fill"></i></a>
+							</td>
+						  </tr>
+						  
+						</table>
 				</div>
 				<div th:if="${myTeam.players.isEmpty()}">
 					<h5 style="color: #b0aeae!important; text-align: center;">La squadra non ha giocatori</h5>
 				</div>
 			</div>
-			<h1 id="title">Aggiungi Giocatori</h1>
+			<div>
+				<form  th:action="@{/president/newPlayer}" method="POST">
+				<h1 style="color: rgb(221, 239, 114)!important; text-align: center;">Aggiungi un nuovo giocatore:</h1>
+				<label style="font-weight: bolder;">Nome:</label>
+                <input type="text" th:field="${player.name}" class="input-text form-control">
+                <label style="font-weight: bolder;">Cognome:</label>
+                 <input type="text" th:field="${player.lastname}" class="input-text form-control">
+                <label style="font-weight: bolder;">Ruolo:</label>
+                <input type="text" th:field="${player.role}" class="input-text form-control">
+                <label style="font-weight: bolder;">Data di nascita:</label>
+               	<input type="date" class="input-text form-control" th:field="${player.dateOfBirth}"/>
+               	<h2 style="color: rgb(221, 239, 114)!important; text-align: center;">Inserisci tesseramento con la Squadra</h2>
+               	<label style="font-weight: bolder;">Inizio Tesseramento:</label>
+               	<input type="date" class="input-text form-control" th:field="${player.startDate}"/>
+               	<label style="font-weight: bolder;">Fine Tesseramento:</label>
+               	<input type="date" class="input-text form-control" th:field="${player.endDate}"/>
+               <div class="btn-container">
+				   <button type="submit" class="btn">Aggiungi</button>
+			   </div>
+			   <span class="danger" th:if="${newPlayerError}" th:text="${newPlayerError}"></span>
+            </form>
+			</div>
+			<h1 style="margin-top: 3%;" id="title">Aggiungi giocatori già esistenti</h1>
 			<h5 style="color: #b0aeae!important; text-align: center;">(il tesseramento con la squadra ha durata di un anno preciso)</h5>
 			<div th:if="${players}" class="player-container">
 				<div th:each="player : ${players}" class="player-info-container">
@@ -72,7 +114,7 @@
 						<p class="label">Roulo: <span th:text="${player.role}"></span></p>
 					</div>
 					<div style="width: 20%; margin-top: 22%;">
-						<a th:href="@{'/president/addPlayers/'+ ${myTeam.id}+'/'+${player.id}}" class="add"><i
+						<a th:href="@{'/president/addPlayer/'+${player.id}}"><i
 								class="bi bi-plus-circle-fill"></i></a>
 					</div>
 				</div>

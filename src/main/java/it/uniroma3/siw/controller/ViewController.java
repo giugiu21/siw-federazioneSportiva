@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.model.Credentials;
+import it.uniroma3.siw.model.President;
 import it.uniroma3.siw.model.User;
+import it.uniroma3.siw.repository.PresidentRepository;
 import it.uniroma3.siw.repository.TeamRepository;
-import it.uniroma3.siw.repository.UserRepository;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.PlayerService;
-import it.uniroma3.siw.service.TeamService;
 import it.uniroma3.siw.service.UserService;
 import jakarta.validation.Valid;
 
@@ -32,16 +32,13 @@ public class ViewController {
 	private UserService userService;
 	
 	@Autowired
-	private UserRepository userRepository;
-	
-	@Autowired
-	private TeamService teamService;
-	
-	@Autowired
 	private PlayerService playerService;
 	
 	@Autowired
 	private TeamRepository teamRepository;
+	
+	@Autowired
+	private PresidentRepository presidentRepository;
 	
 	
 	
@@ -65,14 +62,12 @@ public class ViewController {
 		
 		/*Controllo se è presidente*/
 		if(credentials!=null) {
-			User user =  this.userRepository.findById(credentials.getUser().getId()).orElse(null);
-			
-			if(user!=null && this.teamService.isPresident(user.getName(), user.getLastname())){
+			President president = this.presidentRepository.findByUsername(userDetails.getUsername());
+			if(president!=null){
 				model.addAttribute("president", true);
 			}
 			
 		}
-		
 		
 		return "index.html";
 	}
@@ -91,14 +86,12 @@ public class ViewController {
 			model.addAttribute("admin", true);
 		}
 		/*Controllo se è presidente*/
-		User user =  this.userRepository.findById(credentials.getUser().getId()).orElse(null);
-		
-		if(user!=null && this.teamService.isPresident(user.getName(), user.getLastname())){
+		President president = this.presidentRepository.findByUsername(userDetails.getUsername());
+		if(president!=null){
 			model.addAttribute("president", true);
 		}
 
 		model.addAttribute("userDetails", userDetails);
-		//model.addAttribute("recipes", this.recipeRepository.findTopN(4));
 		return "index.html";
 	}
 	
@@ -150,11 +143,11 @@ public class ViewController {
 			model.addAttribute("admin", true);
 		}
 		/*Controllo se è presidente*/
-		User user =  this.userRepository.findById(credentials.getUser().getId()).orElse(null);
-		
-		if(user!=null && this.teamService.isPresident(user.getName(), user.getLastname())){
+		President president = this.presidentRepository.findByUsername(userDetails.getUsername());
+		if(president!=null){
 			model.addAttribute("president", true);
 		}
+		
 		this.playerService.freePlayersFromContract();
 		model.addAttribute("teams", this.teamRepository.findAll());
 		return "allTeams.html";

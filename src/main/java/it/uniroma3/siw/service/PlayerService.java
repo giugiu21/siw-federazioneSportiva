@@ -22,6 +22,16 @@ public class PlayerService {
 	private TeamRepository teamRepository;
 	
 	
+	public void edit(Player player, Long id) {
+		Player playerEdited = this.playerRepository.findById(id).orElse(null);
+		
+		playerEdited.setStartDate(player.getStartDate());
+		playerEdited.setEndDate(player.getEndDate());
+		
+		this.playerRepository.save(playerEdited);
+	}
+	
+	
 	public void freePlayersFromContract() {
 		
 		Iterable<Team> allTeams = this.teamRepository.findAll();

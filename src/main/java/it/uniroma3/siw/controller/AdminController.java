@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.Team;
-import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.TeamRepository;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.PresidentService;
