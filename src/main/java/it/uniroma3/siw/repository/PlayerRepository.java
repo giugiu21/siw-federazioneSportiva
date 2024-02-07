@@ -7,5 +7,7 @@ import it.uniroma3.siw.model.Player;
 
 @Repository
 public interface PlayerRepository extends CrudRepository<Player, Long>{
+	
+	public boolean existsByNameAndLastname(String name, String lastname);
 
 }

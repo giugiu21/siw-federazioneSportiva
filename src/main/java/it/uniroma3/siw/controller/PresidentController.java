@@ -1,6 +1,5 @@
 package it.uniroma3.siw.controller;
 
-import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -34,6 +33,7 @@ public class PresidentController {
 	
 	@Autowired
 	private PlayerService playerService;
+	
 	
 	@Autowired
 	private PresidentRepository presidentRepository;
@@ -111,7 +111,6 @@ public class PresidentController {
 				return "president/myTeam.html";
 			}
 			else {
-				model.addAttribute("noTeam", true);
 				return "president/myTeam.html";
 			}
 		}

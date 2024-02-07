@@ -39,13 +39,16 @@ public class PlayerService {
 		for(Team team : allTeams) {
 			for(Player usedPlayer : team.getPlayers()) {
 				
-				if(usedPlayer.getEndDate().equals(java.time.LocalDate.now()) || usedPlayer.getEndDate().isBefore(java.time.LocalDate.now())) {
-					team.getPlayers().remove(usedPlayer);
-					usedPlayer.setStartDate(null);
-					usedPlayer.setEndDate(null);
-					this.teamRepository.save(team);
-					this.playerRepository.save(usedPlayer);
+				if(usedPlayer.getEndDate()!=null) {
+					if(usedPlayer.getEndDate().equals(java.time.LocalDate.now()) || usedPlayer.getEndDate().isBefore(java.time.LocalDate.now())) {
+						team.getPlayers().remove(usedPlayer);
+						usedPlayer.setStartDate(null);
+						usedPlayer.setEndDate(null);
+						this.teamRepository.save(team);
+						this.playerRepository.save(usedPlayer);
+					}
 				}
+				
 			}
 		}
 	}

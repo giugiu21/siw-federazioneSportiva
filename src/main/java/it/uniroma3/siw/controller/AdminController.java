@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.PresidentService;
 import it.uniroma3.siw.service.TeamService;
 import it.uniroma3.siw.service.UserService;
+import it.uniroma3.siw.validators.TeamValidator;
 import it.uniroma3.siw.repository.PresidentRepository;
 
 @Controller
@@ -44,6 +46,9 @@ public class AdminController {
 
 	@Autowired
 	private TeamService teamService;
+	
+	@Autowired
+	private TeamValidator teamValidator;
 
 
 	
@@ -84,7 +89,7 @@ public class AdminController {
 	}
 	
 	@PostMapping("/admin/newTeam")
-	public String newTeam(@ModelAttribute("team") Team team, Model model) {
+	public String newTeam(@ModelAttribute("team") Team team, BindingResult teamBindingResult, Model model) {
 		UserDetails userDetails = this.userService.getUserDetails();
 		Credentials credentials = this.credentialsService.getCredentials(userDetails.getUsername());
 		
@@ -95,14 +100,16 @@ public class AdminController {
 			model.addAttribute("admin", true);
 		}
 		
-		if (!teamRepository.existsByName(team.getName())) {
+		this.teamValidator.validate(team, teamBindingResult);
+		
+		if(!teamBindingResult.hasErrors()) {
 			this.teamRepository.save(team);
 			model.addAttribute("teams", this.teamRepository.findAll());
 			
 			return "allTeams.html";
 			
 		} else {
-			model.addAttribute("newTeamError", "Questa squadra già esiste!");
+			model.addAttribute("newTeamError", "*Questa squadra già esiste!");
 			return "admin/formNewTeam.html";
 		}
 	}

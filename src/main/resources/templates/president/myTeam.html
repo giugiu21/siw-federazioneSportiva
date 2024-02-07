@@ -64,12 +64,12 @@
 						    <th style=" color: rgb(221, 239, 114);">Azioni</th>
 						  </tr>
 						  <tr th:each="player : ${myTeam.players}">
-						    <td style="color: #b0aeae!important;" th:text="${player.name}">Alfreds Futterkiste</td>
-						    <td style="color: #b0aeae!important;"  th:text="${player.lastname}">Maria Anders</td>
-						    <td style="color: #b0aeae!important;" th:text="${player.role}">Maria Anders</td>
-						    <td style="color: #b0aeae!important;" th:text="${player.dateOfBirth}">Maria Anders</td>
-						    <td style="color: #b0aeae!important;" th:text="${player.startDate}">Germany</td>
-						    <td style="color: #b0aeae!important;" th:text="${player.endDate}">Germany</td>
+						    <td style="color: #b0aeae!important;" th:text="${player.name}">Francesco</td>
+						    <td style="color: #b0aeae!important;"  th:text="${player.lastname}">Totti</td>
+						    <td style="color: #b0aeae!important;" th:text="${player.role}">Attaccante</td>
+						    <td style="color: #b0aeae!important;" th:text="${player.dateOfBirth}">09-09-1996</td>
+						    <td style="color: #b0aeae!important;" th:text="${player.startDate}">10-10-2022</td>
+						    <td style="color: #b0aeae!important;" th:text="${player.endDate}">11-10-2023</td>
 						    <td>
 								<a th:href="@{'/president/deletePlayer/'+ ${myTeam.id}+'/'+${player.id}}" style=" width: 30%;" class="remove"><i
 								class="bi bi-x-circle-fill"></i></a>
@@ -85,23 +85,31 @@
 			<div>
 				<form  th:action="@{/president/newPlayer}" method="POST">
 				<h1 style="color: rgb(221, 239, 114)!important; text-align: center;">Aggiungi un nuovo giocatore:</h1>
+				
 				<label style="font-weight: bolder;">Nome:</label>
                 <input type="text" th:field="${player.name}" class="input-text form-control">
+                
                 <label style="font-weight: bolder;">Cognome:</label>
-                 <input type="text" th:field="${player.lastname}" class="input-text form-control">
+                <input type="text" th:field="${player.lastname}" class="input-text form-control">
+                
                 <label style="font-weight: bolder;">Ruolo:</label>
                 <input type="text" th:field="${player.role}" class="input-text form-control">
+                
                 <label style="font-weight: bolder;">Data di nascita:</label>
                	<input type="date" class="input-text form-control" th:field="${player.dateOfBirth}"/>
+               	
                	<h2 style="color: rgb(221, 239, 114)!important; text-align: center;">Inserisci tesseramento con la Squadra</h2>
+               	
                	<label style="font-weight: bolder;">Inizio Tesseramento:</label>
                	<input type="date" class="input-text form-control" th:field="${player.startDate}"/>
+               
                	<label style="font-weight: bolder;">Fine Tesseramento:</label>
                	<input type="date" class="input-text form-control" th:field="${player.endDate}"/>
+               	
                <div class="btn-container">
 				   <button type="submit" class="btn">Aggiungi</button>
 			   </div>
-			   <span class="danger" th:if="${newPlayerError}" th:text="${newPlayerError}"></span>
+			  
             </form>
 			</div>
 			<h1 style="margin-top: 3%;" id="title">Aggiungi giocatori già esistenti</h1>

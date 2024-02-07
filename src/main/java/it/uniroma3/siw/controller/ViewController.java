@@ -20,6 +20,8 @@ import it.uniroma3.siw.repository.TeamRepository;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.PlayerService;
 import it.uniroma3.siw.service.UserService;
+import it.uniroma3.siw.validators.CredentialsValidator;
+import it.uniroma3.siw.validators.UserValidator;
 import jakarta.validation.Valid;
 
 @Controller
@@ -27,6 +29,12 @@ public class ViewController {
 	
 	@Autowired
 	private CredentialsService credentialsService;
+	
+	@Autowired
+	private CredentialsValidator credentialsValidator;
+	
+	@Autowired
+	private UserValidator userValidator;
 	
 	@Autowired
 	private UserService userService;
@@ -110,8 +118,8 @@ public class ViewController {
 			@ModelAttribute("credentials") Credentials credentials,
 			BindingResult credentialsBindingResult,
 			Model model) {
-		//this.userValidator.validate(user,userBindingResult);
-		//this.credentialsValidator.validate(credentials, credentialsBindingResult);                        
+		this.userValidator.validate(user,userBindingResult);
+		this.credentialsValidator.validate(credentials, credentialsBindingResult);                        
 		if(!userBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
 			credentials.setUser(user);
 			credentialsService.saveCredentials(credentials);
@@ -120,7 +128,10 @@ public class ViewController {
 			return "formLogin.html";
 		}
 		else {
-			model.addAttribute("registrationError", "Errore nella registrazione");
+			if(userBindingResult.hasErrors()) {
+				model.addAttribute("registrationErrorUser", "*Email già in uso");
+			}
+			model.addAttribute("registrationError", "*Username già in uso");
 		}
 		return "formRegistration.html";
 	}

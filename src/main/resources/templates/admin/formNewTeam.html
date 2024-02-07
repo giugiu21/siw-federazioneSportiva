@@ -51,10 +51,17 @@
 				<h1 style="color: rgb(221, 239, 114)!important; text-align: center;">Aggiungi una nuova Squadra</h1>
 				<label style="font-weight: bolder;">Nome:</label>
                 <input type="text" th:field="${team.name}" class="input-text form-control">
+                <p th:if="${#fields.hasErrors('team.name')}" th:errors="${team.name}" th:style="'color:red'"></p>
+                
                 <label style="font-weight: bolder;">Anno di Fondazione:</label>
                 <input type="date" th:field="${team.foundingYear}" class="input-text form-control">
+                <p th:if="${#fields.hasErrors('team.name')}" th:errors="${team.name}" th:style="'color:red'"></p>
+                <p th:if="${newTeamError}" th:text="${newTeamError}" th:style="'color:red'"></p>
+                
                 <label style="font-weight: bolder;">Indirizzo Sede:</label>
                 <input type="text" th:field="${team.address}" class="input-text form-control">
+                <p th:if="${#fields.hasErrors('team.name')}" th:errors="${team.name}" th:style="'color:red'"></p>
+				
 				<label style="font-weight: bolder; margin-bottom: 2%;">Aggiungi presidente:</label>
 				<div th:if="${presidents}">
 							<select id="president" th:field="${team.president}" class="input-select">
@@ -80,7 +87,6 @@
                <div class="btn-container">
 				   <button type="submit" class="btn">Aggiungi</button>
 			   </div>
-			   <span class="danger" th:if="${newTeamError}" th:text="${newTeamError}"></span>
             </form>
 		</div>
 	</div>
