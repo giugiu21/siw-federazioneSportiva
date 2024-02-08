@@ -46,6 +46,15 @@
 <body>
 	<!-- SE L'UTENTE E' LOGGATO -->
 	<div class="main-container" th:if="${userDetails}">
+		<div class="container-bg-logged">
+			<div class="container-text">
+				<h5 class="subtitle" style="margin-top: 0%!important; color: black; margin-left: 25%;">Bentornato <span style="color:rgb(221, 239, 114)!important;" th:text="${userDetails.getUsername()}"></span> !</h5>
+				<h1 class="title-logged">Federazione</h1>
+				<h1 class="title-logged">Sport</h1>
+				<h3 class="subtitle">Il meglio per le nostre squadre</h3>
+				
+			</div>
+		</div>
 		
 	</div>
 	
