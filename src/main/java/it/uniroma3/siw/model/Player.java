@@ -14,20 +14,25 @@ public class Player {
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	private Long id;
 	
+	//@NotBlank
 	private String name;
 	
+	//@NotBlank
 	private String lastname;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateOfBirth;
 	
+	//@NotBlank
 	private String role;
 	
 	private String placeOfBirth;
 	
+	//@NotBlank
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate startDate;
 	
+	//@NotBlank
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate endDate;
 

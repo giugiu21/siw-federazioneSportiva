@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ public class PresidentController {
 	
 	@Autowired
 	private PlayerService playerService;
+	
 	
 	
 	@Autowired
@@ -78,7 +80,7 @@ public class PresidentController {
 	}
 	
 	@PostMapping("/president/newPlayer")
-	public String addPlayer(@ModelAttribute("player") Player player, Model model) {
+	public String addPlayer(@ModelAttribute("player") Player player, BindingResult playerBindingResult, Model model) {
 		UserDetails userDetails = this.userService.getUserDetails();
 		if(userDetails!=null) {
 			model.addAttribute("userDetails", userDetails);
@@ -96,11 +98,12 @@ public class PresidentController {
 			
 			if(myTeam!=null) {
 				model.addAttribute("myTeam", myTeam);
-				
+
 				this.playerRepository.save(player);
-				
+					
 				myTeam.getPlayers().add(player);
 				this.teamRepository.save(myTeam);
+				
 				
 				this.playerService.freePlayersFromContract();
 				

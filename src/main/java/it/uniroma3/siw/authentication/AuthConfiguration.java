@@ -42,7 +42,7 @@ public class AuthConfiguration {
 		.authorizeHttpRequests()
 		//.requestMatchers(/**).permitAll()
 		//chiunque autenticato o no può accedere alle pagine index, login, register, css e immagini
-		.requestMatchers(HttpMethod.GET,"/", "/index", "/register", "/login", "/css/**", "/images/**", "favicon.ico").permitAll()
+		.requestMatchers(HttpMethod.GET,"/", "/index", "/register", "/error", "/login", "/css/**", "/images/**", "favicon.ico").permitAll()
 		//chiunque autenticato o no può mandare richieste POST per login e register
 		.requestMatchers(HttpMethod.POST, "/register", "/login").permitAll()
 		.requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(Credentials.ADMIN_ROLE)

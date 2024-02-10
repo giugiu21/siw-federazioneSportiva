@@ -1,6 +1,8 @@
 package it.uniroma3.siw.repository;
 
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -22,4 +24,5 @@ public interface TeamRepository extends CrudRepository<Team, Long>{
 	
 	public Team findByPresident(President president);
 
+	public List<Team> findByPresidentIsNotNull();
 }

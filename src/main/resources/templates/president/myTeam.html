@@ -50,9 +50,9 @@
 			<h1 th:text="${myTeam.name}" id="title"></h1>
 			<h3 class="label">Anno di fondazione: <span th:text="${myTeam.foundingYear}"></span></h3>
 			<h3 class="label">Indirizzo sede: <span th:text="${myTeam.address}"></span></h3>
-			<div class="allPlayers-container">
+			<div>
 				<h3 class="label">Giocatori:</h3>
-				<div th:if="${!myTeam.players.isEmpty()}">
+				<div th:if="${!myTeam.players.isEmpty()}" class="table-container">
 					<table>
 						  <tr>
 						    <th style=" color: rgb(221, 239, 114);">Nome</th>
@@ -82,7 +82,7 @@
 					<h5 style="color: #b0aeae!important; text-align: center;">La squadra non ha giocatori</h5>
 				</div>
 			</div>
-			<div>
+			<div class="playerForm-container">
 				<form  th:action="@{/president/newPlayer}" method="POST">
 				<h1 style="color: rgb(221, 239, 114)!important; text-align: center;">Aggiungi un nuovo giocatore:</h1>
 				

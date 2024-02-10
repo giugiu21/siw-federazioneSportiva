@@ -3,6 +3,7 @@ package it.uniroma3.siw.model;
 import java.util.Objects;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "users")
@@ -12,10 +13,13 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	@NotBlank
 	private String name;
 	
+	@NotBlank
 	private String lastname;
 	
+	@NotBlank
 	private String email;
 	
 	

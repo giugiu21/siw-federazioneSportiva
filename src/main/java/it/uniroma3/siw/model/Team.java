@@ -6,7 +6,6 @@ import java.util.Set;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "teams")
@@ -16,9 +15,9 @@ public class Team {
 	@GeneratedValue ( strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@NotBlank
 	private String name;
 	
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate foundingYear;
 	
