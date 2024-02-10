@@ -109,7 +109,13 @@ public class AdminController {
 			return "allTeams.html";
 			
 		} else {
-			model.addAttribute("newTeamError", "*Questa squadra già esiste!");
+			if(teamBindingResult.hasErrors()) {
+				model.addAttribute("newTeamError", "*Campo obbligatorio");
+				model.addAttribute("presidents", this.presidentService.getFreePresidents());
+				return "admin/formNewTeam.html";
+			}
+			model.addAttribute("newTeamError", "*Squadra già esistente");
+			model.addAttribute("presidents", this.presidentService.getFreePresidents());
 			return "admin/formNewTeam.html";
 		}
 	}
@@ -136,7 +142,7 @@ public class AdminController {
 	
 	
 	@PostMapping("/admin/formEditTeam/{id}")
-	public String editTeam(@ModelAttribute("team") Team team, @PathVariable("id") Long teamId,  Model model) {
+	public String editTeam(@ModelAttribute("team") Team team, BindingResult teamBindingResult, @PathVariable("id") Long teamId,  Model model) {
 		
 		UserDetails userDetails = this.userService.getUserDetails();
 		Credentials credentials = this.credentialsService.getCredentials(userDetails.getUsername());
@@ -160,10 +166,19 @@ public class AdminController {
 		}
 		
 		else {
-			this.teamService.edit(team, teamId);
-			model.addAttribute("teams", this.teamRepository.findAll());
-			
-			return "allTeams.html";
+			this.teamValidator.validate(team, teamBindingResult);
+			if(!teamBindingResult.hasErrors()) {
+				this.teamService.edit(team, teamId);
+				model.addAttribute("teams", this.teamRepository.findAll());
+				
+				return "allTeams.html";
+			}
+			else {
+				model.addAttribute("team", this.teamRepository.findById(teamId).get());
+				model.addAttribute("editTeamError", "*Campo obbligatorio");
+				model.addAttribute("presidents", this.presidentRepository.findAll());
+				return "admin/formEditTeam.html";
+			}
 		}
 		
 		

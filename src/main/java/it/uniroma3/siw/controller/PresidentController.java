@@ -19,6 +19,7 @@ import it.uniroma3.siw.repository.PresidentRepository;
 import it.uniroma3.siw.repository.TeamRepository;
 import it.uniroma3.siw.service.PlayerService;
 import it.uniroma3.siw.service.UserService;
+import it.uniroma3.siw.validators.PlayerValidator;
 
 @Controller
 public class PresidentController {
@@ -34,6 +35,9 @@ public class PresidentController {
 	
 	@Autowired
 	private PlayerService playerService;
+	
+	@Autowired
+	private PlayerValidator playerValidator;
 	
 	
 	
@@ -98,12 +102,18 @@ public class PresidentController {
 			
 			if(myTeam!=null) {
 				model.addAttribute("myTeam", myTeam);
-
-				this.playerRepository.save(player);
-					
-				myTeam.getPlayers().add(player);
-				this.teamRepository.save(myTeam);
 				
+				this.playerValidator.validate(player, playerBindingResult);
+				if(!playerBindingResult.hasErrors()) {
+					this.playerRepository.save(player);
+					
+					myTeam.getPlayers().add(player);
+					this.teamRepository.save(myTeam);
+				}
+				else {
+					model.addAttribute("playerError", "*Data tesseramento non valida");
+					
+				}
 				
 				this.playerService.freePlayersFromContract();
 				
@@ -138,24 +148,6 @@ public class PresidentController {
 		
 		Player player = this.playerRepository.findById(playerId).get();
 		
-		
-//		/*metto automaticamente la data di tesseramento*/
-//		LocalDate now = LocalDate.now();
-//		player.setStartDate(now);
-//		LocalDate oneYearAfter = now.plusYears(1);
-//		player.setEndDate(oneYearAfter);
-//		
-//		team.getPlayers().add(player);//Aggiungo il giocatore alla squadra
-//		this.teamRepository.save(team);
-		
-		
-//		this.playerService.freePlayersFromContract();
-//		
-//		Iterable<Player> freePlayers = this.playerService.getFreePlayers();
-//		model.addAttribute("players", freePlayers);
-//		model.addAttribute("myTeam", team);
-//		model.addAttribute("player", new Player());
-		
 		model.addAttribute("player", player);
 		
 		
@@ -176,10 +168,18 @@ public class PresidentController {
 		}
 		
 		Team myTeam = this.teamRepository.findByPresident(president);
+
+		if(player.getStartDate()!=null && player.getEndDate()!=null) {
+			this.playerService.edit(player, playerId);
+			myTeam.getPlayers().add(this.playerRepository.findById(playerId).orElse(null));
+		}
+		else {
+			model.addAttribute("playerError", "*Data tesseramento non valida");
+			Player currentPlayer = this.playerRepository.findById(playerId).get();
+			model.addAttribute("player", currentPlayer);
+			return "president/addPlayerToTeam.html";
+		}
 		
-		
-		this.playerService.edit(player, playerId);
-		myTeam.getPlayers().add(this.playerRepository.findById(playerId).orElse(null));
 		this.playerService.freePlayersFromContract();
 		
 		Iterable<Player> freePlayers = this.playerService.getFreePlayers();

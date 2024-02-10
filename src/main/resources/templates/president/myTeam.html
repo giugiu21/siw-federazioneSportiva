@@ -88,12 +88,15 @@
 				
 				<label style="font-weight: bolder;">Nome:</label>
                 <input type="text" th:field="${player.name}" class="input-text form-control">
+                <p th:if="${#fields.hasErrors('player.name')}" th:errors="${player.name}" th:style="'color:red'"></p>
                 
                 <label style="font-weight: bolder;">Cognome:</label>
                 <input type="text" th:field="${player.lastname}" class="input-text form-control">
+                <p th:if="${#fields.hasErrors('player.lastname')}" th:errors="${player.lastname}" th:style="'color:red'"></p>
                 
                 <label style="font-weight: bolder;">Ruolo:</label>
                 <input type="text" th:field="${player.role}" class="input-text form-control">
+                <p th:if="${#fields.hasErrors('player.role')}" th:errors="${player.role}" th:style="'color:red'"></p>
                 
                 <label style="font-weight: bolder;">Data di nascita:</label>
                	<input type="date" class="input-text form-control" th:field="${player.dateOfBirth}"/>
@@ -102,9 +105,11 @@
                	
                	<label style="font-weight: bolder;">Inizio Tesseramento:</label>
                	<input type="date" class="input-text form-control" th:field="${player.startDate}"/>
+               	<p th:if="${playerError}" th:text="${playerError}" th:style="'color:red'"></p>
                
                	<label style="font-weight: bolder;">Fine Tesseramento:</label>
                	<input type="date" class="input-text form-control" th:field="${player.endDate}"/>
+               	<p th:if="${playerError}" th:text="${playerError}" th:style="'color:red'"></p>
                	
                <div class="btn-container">
 				   <button type="submit" class="btn">Aggiungi</button>

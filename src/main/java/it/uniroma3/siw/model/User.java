@@ -23,7 +23,6 @@ public class User {
 	private String email;
 	
 	
-	private Boolean isPresident;
 
 	public Long getId() {
 		return id;
@@ -58,17 +57,10 @@ public class User {
 	}
 
 
-	public Boolean getIsPresident() {
-		return isPresident;
-	}
-
-	public void setIsPresident(Boolean isPresident) {
-		this.isPresident = isPresident;
-	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, isPresident, lastname, name);
+		return Objects.hash(id, lastname, name);
 	}
 
 	@Override
@@ -81,7 +73,7 @@ public class User {
 			return false;
 		User other = (User) obj;
 		return  Objects.equals(id, other.id)
-				&& Objects.equals(isPresident, other.isPresident) && Objects.equals(lastname, other.lastname)
+				&& Objects.equals(lastname, other.lastname)
 				&& Objects.equals(name, other.name);
 	}
 	

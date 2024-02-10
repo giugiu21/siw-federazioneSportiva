@@ -54,10 +54,15 @@
             <label style="font-weight: bolder;">Data di nascita:</label>
            	<h4 class="player-info" th:text="${player.dateOfBirth}"></h4>
            	<h2 style="color: rgb(221, 239, 114)!important; text-align: center;">Inserisci tesseramento con la Squadra</h2>
+           	
            	<label style="font-weight: bolder;">Inizio Tesseramento:</label>
            	<input type="date" class="input-text form-control" th:field="${player.startDate}"/>
+           	<p th:if="${playerError}" th:text="${playerError}" th:style="'color:red'"></p>
+           	
            	<label style="font-weight: bolder;">Fine Tesseramento:</label>
            	<input type="date" class="input-text form-control" th:field="${player.endDate}"/>
+           	<p th:if="${playerError}" th:text="${playerError}" th:style="'color:red'"></p>
+           
            <div class="btn-container">
 			   <button type="submit" class="btn">Aggiungi</button>
 		   </div>

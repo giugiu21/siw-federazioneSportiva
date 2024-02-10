@@ -24,7 +24,7 @@ public class TeamValidator implements Validator{
     @Override
     public void validate(Object target, Errors errors) {
         Team team = (Team) target;
-        if(team.getName() != null && this.teamRepository.existsByName(team.getName())){
+        if(team.getName()==null || (team.getName() != null && this.teamRepository.existsByName(team.getName()))){
             errors.reject("team.name.duplicate");
         }
     }
