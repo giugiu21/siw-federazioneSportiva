@@ -12,4 +12,5 @@ public interface PresidentRepository extends CrudRepository<President, Long>{
 	//public President findByNameAndLastname(String name, String lastname);
 	
 	public President findByUsername(String username);
+	
 }

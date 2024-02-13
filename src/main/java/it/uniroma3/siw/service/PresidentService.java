@@ -45,9 +45,7 @@ public class PresidentService {
 		}
 		
 		return freePresidents;
-		
 	}
-	
-	
+
 
 }

@@ -19,7 +19,6 @@ import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.Team;
 import it.uniroma3.siw.repository.TeamRepository;
 import it.uniroma3.siw.service.CredentialsService;
-import it.uniroma3.siw.service.PresidentService;
 import it.uniroma3.siw.service.TeamService;
 import it.uniroma3.siw.service.UserService;
 import it.uniroma3.siw.validators.TeamValidator;
@@ -41,8 +40,6 @@ public class AdminController {
 	@Autowired
 	private UserService userService;
 
-	@Autowired
-	private PresidentService presidentService;
 
 	@Autowired
 	private TeamService teamService;
@@ -84,7 +81,7 @@ public class AdminController {
 		}
 		
 		model.addAttribute("team", new Team());
-		model.addAttribute("presidents", this.presidentService.getFreePresidents());
+		model.addAttribute("presidents", this.presidentRepository.findAll());
 		return "admin/formNewTeam.html";
 	}
 	
@@ -100,6 +97,13 @@ public class AdminController {
 			model.addAttribute("admin", true);
 		}
 		
+		Team t = this.teamRepository.findByPresident(team.getPresident());
+		if(t!=null) {
+			model.addAttribute("PresidentError", "Presidente già in uso, scegline un altro");
+			model.addAttribute("presidents", this.presidentRepository.findAll());
+			return "admin/formNewTeam.html";
+		}
+		
 		this.teamValidator.validate(team, teamBindingResult);
 		
 		if(!teamBindingResult.hasErrors()) {
@@ -111,11 +115,11 @@ public class AdminController {
 		} else {
 			if(teamBindingResult.hasErrors()) {
 				model.addAttribute("newTeamError", "*Campo obbligatorio");
-				model.addAttribute("presidents", this.presidentService.getFreePresidents());
+				model.addAttribute("presidents", this.presidentRepository.findAll());
 				return "admin/formNewTeam.html";
 			}
 			model.addAttribute("newTeamError", "*Squadra già esistente");
-			model.addAttribute("presidents", this.presidentService.getFreePresidents());
+			model.addAttribute("presidents", this.presidentRepository.findAll());
 			return "admin/formNewTeam.html";
 		}
 	}
