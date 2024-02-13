@@ -1,5 +1,6 @@
 package it.uniroma3.siw.controller;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -69,7 +70,7 @@ public class PresidentController {
 				
 				this.playerService.freePlayersFromContract();
 				
-				Iterable<Player> freePlayers = this.playerService.getFreePlayers();
+				List<Player> freePlayers = this.playerRepository.findAllByEndDateIsNull();
 				model.addAttribute("players", freePlayers);
 				model.addAttribute("player", new Player());
 				
@@ -117,7 +118,7 @@ public class PresidentController {
 				
 				this.playerService.freePlayersFromContract();
 				
-				Iterable<Player> freePlayers = this.playerService.getFreePlayers();
+				List<Player> freePlayers = this.playerRepository.findAllByEndDateIsNull();
 				model.addAttribute("players", freePlayers);
 				model.addAttribute("player", new Player());
 				
@@ -185,7 +186,7 @@ public class PresidentController {
 		
 		this.playerService.freePlayersFromContract();
 		
-		Iterable<Player> freePlayers = this.playerService.getFreePlayers();
+		List<Player> freePlayers = this.playerRepository.findAllByEndDateIsNull();
 		model.addAttribute("players", freePlayers);
 		model.addAttribute("myTeam", myTeam);
 		model.addAttribute("player", new Player());
@@ -223,7 +224,7 @@ public class PresidentController {
 		
 		this.playerService.freePlayersFromContract();
 		
-		Iterable<Player> freePlayers = this.playerService.getFreePlayers();
+		List<Player> freePlayers = this.playerRepository.findAllByEndDateIsNull();
 		model.addAttribute("players", freePlayers);
 		model.addAttribute("myTeam", team);
 		model.addAttribute("player", new Player());
