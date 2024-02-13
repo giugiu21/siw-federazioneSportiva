@@ -155,17 +155,11 @@ public class AdminController {
 			model.addAttribute("admin", true);
 		}
 		
-		boolean pInUse = this.teamService.isUsed(team.getPresident());
+		
+		Team t = this.teamRepository.findByPresident(team.getPresident());
 		
 		
-		if(pInUse) {
-			model.addAttribute("team", this.teamRepository.findById(teamId).get());
-			model.addAttribute("PresidentError", "Presidente già in uso, scegline un altro");
-			model.addAttribute("presidents", this.presidentRepository.findAll());
-			return "admin/formEditTeam.html";
-		}
-		
-		else {
+		if(t!=null && (t.getId().equals(team.getId()))) {
 			this.teamValidator.validate(team, teamBindingResult);
 			if(!teamBindingResult.hasErrors()) {
 				this.teamService.edit(team, teamId);
@@ -179,6 +173,14 @@ public class AdminController {
 				model.addAttribute("presidents", this.presidentRepository.findAll());
 				return "admin/formEditTeam.html";
 			}
+		}
+		
+		else {
+			model.addAttribute("team", this.teamRepository.findById(teamId).get());
+			model.addAttribute("PresidentError", "Presidente già in uso, scegline un altro");
+			model.addAttribute("presidents", this.presidentRepository.findAll());
+			return "admin/formEditTeam.html";
+			
 		}
 		
 		

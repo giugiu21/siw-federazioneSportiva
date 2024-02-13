@@ -170,8 +170,11 @@ public class PresidentController {
 		Team myTeam = this.teamRepository.findByPresident(president);
 
 		if(player.getStartDate()!=null && player.getEndDate()!=null) {
+			
 			this.playerService.edit(player, playerId);
 			myTeam.getPlayers().add(this.playerRepository.findById(playerId).orElse(null));
+			this.teamRepository.save(myTeam);
+			
 		}
 		else {
 			model.addAttribute("playerError", "*Data tesseramento non valida");
